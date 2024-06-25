@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title</title>
+</head>
+<body>
+    <!-- Your content goes here -->
+	<script>
+$(document).ready(function() {
+  // Fetch tasks on page load
+  fetchTasks();
+
+  // Define function to fetch tasks
+  function fetchTasks() {
+    $.ajax({
+      url: '/api/tasks/',  // Replace with your API endpoint URL
+      dataType: 'json',
+      success: function(data) {
+        // Update the task list with received data
+        updateTaskList(data);
+      }
+    });
+  }
+
+  // Function to update the task list based on received data
+  function updateTaskList(tasks) {
+    // Clear existing task list items (optional)
+    $('#task-list').empty();
+
+    // Loop through tasks and create HTML elements
+    $.each(tasks, function(index, task) {
+      // Create HTML elements for each task (e.g., list item, title, etc.)
+      var taskItem = $('<li>').text(task.title);
+      // Add task details or styling based on task properties
+      $('#task-list').append(taskItem);
+    });
+  }
+});
+</script>
+<input type="text" id="search-bar" placeholder="Search tasks">
+
+<script>
+$(document).ready(function() {
+  $('#search-bar').on('keyup', function() {
+    var searchTerm = $(this).val().toLowerCase();
+    // Filter tasks based on search term and update task list
+    filterTasks(searchTerm);
+  });
+
+  function filterTasks(searchTerm) {
+    // Logic to filter tasks based on search term (e.g., title, description)
+    // Update the task list using updateTaskList function
+  }
+});
+</script>
+<ul id="task-list">
+  </ul>
+
+<script>
+// Implement drag-and-drop functionality here using a library like jQuery UI or interact.js
+// Update task status on drop event and trigger AJAX request to update server-side data
+</script>
+
+
+<script>
+$(document).ready(function() {
+  // Fetch tasks on page load (refer to previous example)
+  fetchTasks();
+
+  // Implement search functionality (refer to previous example)
+
+  // Example for creating a new task using AJAX
+  $('#create-task-form').submit(function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    var data = {
+      title: $('#title').val(),
+      description: $('#description').val(),
+      // Add other task fields as needed
+    };
+
+    $.ajax({
+      url: '/api/tasks/',  // Replace with your API endpoint for creating tasks
+      method: 'POST',
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+      success: function(response) {
+        // Handle successful task creation (e.g., clear form, update task list)
+      },
+      error: function(error) {
+        // Handle errors during task creation
+      }
+    });
+  });
+});
+</script>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</body>
+</html>
