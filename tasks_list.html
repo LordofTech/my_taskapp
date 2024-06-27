@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Management Dashboard</title>
+  </head>
+<body>
+  <div class="container mx-auto px-4 py-8">
+    <h2>Tasks</h2>
+    <ul class="list-none mt-4">
+      {% for task in tasks %}
+        <li class="flex items-center py-2 border-b border-gray-200 hover:bg-gray-100">
+          <a href="{% url 'task_detail' task.pk %}" class="flex-grow text-lg font-medium">{{ task.title }}</a>
+          <span class="badge bg-{{ task.get_status_color }} text-white px-2 py-1 rounded-md">{{ task.get_status_display }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+	<div id="task-list" class="flex flex-col space-y-2">
+  </div>
+
+  </div>
+
+  </body>
+</html>

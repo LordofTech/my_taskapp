@@ -1,103 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Page Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Management Dashboard</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <!-- Your content goes here -->
-	<script>
-$(document).ready(function() {
-  // Fetch tasks on page load
-  fetchTasks();
+  <div class="flex min-h-screen bg-gray-100">
+    <div class="flex flex-col w-64 px-4 py-8 bg-white shadow-md">
+      <h2 class="text-xl font-bold mb-4">Tasks</h2>
+      <div class="flex flex-col space-y-2">
+        <input type="text" id="search-bar" class="flex-grow rounded-md px-4 py-2 border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1" placeholder="Search tasks">
+        <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700" data-toggle="modal" data-target="#createTaskModal">Create Task</button>
+      </div>
+      <ul id="task-list" class="list-none mt-4">
+      </ul>
+    </div>
+    <div class="flex-grow px-4 py-8">
+      <div id="task-details" class="hidden bg-white shadow-md rounded-md p-4">
+        <h3 class="text-lg font-bold mb-2">Task Details</h3>
+        <p id="task-title"></p>
+        <p id="task-description"></p>
+        <div class="flex items-center space-x-2">
+          <span class="badge bg-blue-500 text-white px-2 py-1 rounded-md" id="task-status"></span>
+          <span class="badge bg-yellow-500 text-white px-2 py-1 rounded-md" id="task-priority"></span>
+          <span id="task-due-date"></span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  // Define function to fetch tasks
-  function fetchTasks() {
-    $.ajax({
-      url: '/api/tasks/',  // Replace with your API endpoint URL
-      dataType: 'json',
-      success: function(data) {
-        // Update the task list with received data
-        updateTaskList(data);
-      }
-    });
-  }
-
-  // Function to update the task list based on received data
-  function updateTaskList(tasks) {
-    // Clear existing task list items (optional)
-    $('#task-list').empty();
-
-    // Loop through tasks and create HTML elements
-    $.each(tasks, function(index, task) {
-      // Create HTML elements for each task (e.g., list item, title, etc.)
-      var taskItem = $('<li>').text(task.title);
-      // Add task details or styling based on task properties
-      $('#task-list').append(taskItem);
-    });
-  }
-});
-</script>
-<input type="text" id="search-bar" placeholder="Search tasks">
-
-<script>
-$(document).ready(function() {
-  $('#search-bar').on('keyup', function() {
-    var searchTerm = $(this).val().toLowerCase();
-    // Filter tasks based on search term and update task list
-    filterTasks(searchTerm);
-  });
-
-  function filterTasks(searchTerm) {
-    // Logic to filter tasks based on search term (e.g., title, description)
-    // Update the task list using updateTaskList function
-  }
-});
-</script>
-<ul id="task-list">
-  </ul>
-
-<script>
-// Implement drag-and-drop functionality here using a library like jQuery UI or interact.js
-// Update task status on drop event and trigger AJAX request to update server-side data
-</script>
-
-
-<script>
-$(document).ready(function() {
-  // Fetch tasks on page load (refer to previous example)
-  fetchTasks();
-
-  // Implement search functionality (refer to previous example)
-
-  // Example for creating a new task using AJAX
-  $('#create-task-form').submit(function(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    var data = {
-      title: $('#title').val(),
-      description: $('#description').val(),
-      // Add other task fields as needed
-    };
-
-    $.ajax({
-      url: '/api/tasks/',  // Replace with your API endpoint for creating tasks
-      method: 'POST',
-      data: JSON.stringify(data),
-      contentType: 'application/json',
-      success: function(response) {
-        // Handle successful task creation (e.g., clear form, update task list)
-      },
-      error: function(error) {
-        // Handle errors during task creation
-      }
-    });
-  });
-});
-</script>
-
-
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-</body>
-</html>
+  <div class="modal fade" id="createTaskModal" tabindex="-1" aria-labelledby="createTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createTaskModalLabel">Create Task</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="createTaskForm">
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="status" class="form-label">Status</label>
+              <select class="form-select" id="status" name="status">
+                <option value="TO_DO">To Do</option>
+                <option value="IN_PROGRESS">In Progress</option>
+                <option value="COMPLETED">Completed</option>
+              </select>
+            </div>
+          </form>
+        </div>
+		</body>
+		</html>

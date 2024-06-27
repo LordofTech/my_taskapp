@@ -1,0 +1,104 @@
+/* General styles */
+body {
+  font-family: sans-serif;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* Task List Styles */
+.task-list { /* Increased specificity with class */
+  list-style: none;
+  padding: 0;
+  flex: 0 0 64px;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+}
+
+.task-item { /* Increased specificity with class */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.task-item.active { /* Increased specificity with class */
+  background-color: #f5f5f5;
+}
+
+.task-item h5 { /* Increased specificity with class */
+  flex: 1;
+  margin: 0;
+}
+
+.task-item .badge { /* Increased specificity with class */
+  margin-left: 1rem;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+/* Color Scheme (replace with your preferred colors) */
+.badge-to-do {
+  background-color: #ccc;
+}
+
+.badge-in-progress {
+  background-color: #2196F3;
+}
+
+.badge-completed {
+  background-color: #4CAF50;
+}
+
+/* Task Details Styles */
+#task-details { /* Maintained ID for clarity */
+  flex: 1;
+  padding: 2rem;
+}
+
+/* Search Bar Styles */
+#search-bar { /* Maintained ID for clarity */
+  width: 100%;
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+}
+
+/* Create Task Modal Styles */
+.modal-content { /* Maintained class for clarity */
+  padding: 2rem;
+}
+
+.form-group { /* Maintained class for clarity */
+  margin-bottom: 1rem;
+}
+
+.form-label { /* Maintained class for clarity */
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Typography (replace with your preferred fonts and sizes) */
+body {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.badge {
+  font-weight: bold;
+}
+
+/* Responsiveness (add media queries for different screen sizes) */
+@media (max-width: 768px) {
+  .task-list, #task-details {
+    flex: 1; /* Adjust layout for smaller screens */
+  }
+}
